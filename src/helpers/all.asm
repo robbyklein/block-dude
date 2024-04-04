@@ -3,3 +3,4 @@
 .include "poll_input.asm"
 .include "render_screen.asm"
 .include "reset_scratch.asm"
+.include "scroll_screen_x.asm"

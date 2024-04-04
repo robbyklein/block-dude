@@ -9,10 +9,10 @@
 
     ; Render intro name
     jsr reset_scratch
-    lda #<Level1Bg
-    sta scratch
-    lda #>Level1Bg
-    sta scratch+1
+
+
+
+    set16 Level1Bg, scratch
     lda #$80
     sta scratch+2
     jsr render_screen
@@ -38,11 +38,12 @@
 .endproc
 
 .proc level_update
-    ; So nmi runs
-    Done:
-        lda #$00
-        sta frame_ready
-    
-    ; Return
+    lda #$01
+    sta scratch
+    jsr scroll_screen_x
+    ; Mark that we're ready for the next frame
+    lda #$00
+    sta frame_ready
+
     rts
 .endproc

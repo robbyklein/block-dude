@@ -1,5 +1,6 @@
 ; Scratch 0-1 map address
 ; Scratch 2 map width
+; Scratch 3 buffer columns
 .proc render_screen
     ldx #$20 ; Page
     ldy #$00 ; Position

@@ -19,13 +19,12 @@
     ppu_mask_value: .res 1
     ppu_control_next: .res 1
     ppu_control_value: .res 1
-    scratch: .res 16
     scene_loaded: .res 1
     active_scene: .res 1
-
+    scratch: .res 8
+    vram_buffer: .res 128
 
 .segment "BSS"
-    vram_buffer: .res 1024
 
 .segment "DMC"
 
@@ -40,7 +39,7 @@
     PaletteData: .incbin "assets/palettes.pal"
     IntroBg: .incbin "assets/maps/intro.nam"
     TitleBg: .incbin "assets/maps/title.nam"
-    Level1Bg: .incbin "assets/maps/title.nam"
+    Level1Bg: .incbin "assets/maps/level_1.map"
 
 .segment "VECTORS"
     .addr nmi_handler, reset_handler, irq_handler

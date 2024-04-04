@@ -1,3 +1,5 @@
 .include "empty_buffer.asm"
 .include "load_buffer.asm"
 .include "poll_input.asm"
+.include "render_screen.asm"
+.include "reset_scratch.asm"

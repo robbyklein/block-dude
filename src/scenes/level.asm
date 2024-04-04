@@ -8,10 +8,13 @@
     sta PPU_MASK
 
     ; Render intro name
-    lda #<IntroBg
+    jsr reset_scratch
+    lda #<Level1Bg
     sta scratch
-    lda #>IntroBg
+    lda #>Level1Bg
     sta scratch+1
+    lda #$80
+    sta scratch+2
     jsr render_screen
 
     ; Set loaded flag
@@ -35,10 +38,6 @@
 .endproc
 
 .proc level_update
-    inc debug
-
-
-
     ; So nmi runs
     Done:
         lda #$00

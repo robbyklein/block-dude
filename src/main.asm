@@ -7,10 +7,10 @@
     .include "base/header.asm"
 
 .segment "ZEROPAGE"
-    input: .res 1
-    input_mode: .res 1
     debug: .res 1
     debug2: .res 1
+    input: .res 1
+    input_mode: .res 1
     nmi_counter: .res 1
     frame_ready: .res 1
     scroll_x: .res 1

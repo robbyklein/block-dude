@@ -7,15 +7,38 @@
     lda #%00000110 
     sta PPU_MASK
 
-    ; Render intro name
-    jsr reset_scratch
+    ; Render first name table
+    jsr reset_scratch ; reset temp vars
 
-    set16 Level1Bg, scratch
-    lda #$80
+    ; Store the address in 0-1
+    lda #<Level1Bg
+    sta scratch
+    lda #>Level1Bg
+    sta scratch+1
+    
+    lda #$80 ; map width low byte
     sta scratch+2
-    lda #$01
+    lda #$00 ; map width high byte
     sta scratch+3
+
+    ; Render it
     jsr render_screen
+
+    ; Render scroll buffer column
+    ; jsr reset_scratch
+    ; set16 Level1Bg, scratch
+    ; lda #<$21
+    ; sta scratch+2
+    ; lda #>$00
+    ; sta scratch+3
+    ; lda #$80
+    ; sta scratch+4
+    ; ; lda #$21
+    ; ; sta scratch+3
+    ; ; sta scratch+4
+
+
+
 
     ; Set loaded flag
     lda #$01

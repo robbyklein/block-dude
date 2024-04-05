@@ -10,11 +10,11 @@
     ; Render intro name
     jsr reset_scratch
 
-
-
     set16 Level1Bg, scratch
     lda #$80
     sta scratch+2
+    lda #$01
+    sta scratch+3
     jsr render_screen
 
     ; Set loaded flag
@@ -38,9 +38,10 @@
 .endproc
 
 .proc level_update
-    lda #$01
-    sta scratch
-    jsr scroll_screen_x
+    ; lda #$01
+    ; sta scratch
+    ; jsr scroll_screen_x
+
     ; Mark that we're ready for the next frame
     lda #$00
     sta frame_ready

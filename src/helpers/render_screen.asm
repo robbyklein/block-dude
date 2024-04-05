@@ -2,13 +2,16 @@
 ; Scratch 2 map width
 ; Scratch 3 buffer columns
 .proc render_screen
+    ; Position
     ldx #$20 ; Page
-    ldy #$00 ; Position
-    row_pos := scratch+8
+    ldy #$00 ; Position in page
+    row_pos := scratch+11 ; Position in row
+    col_pos := scratch+7 ; Position in row
 
     ; Local variables
     map_width := scratch+2 ; 128
-    jump_amount := scratch+7
+    buffer_columns := scratch+3
+    jump_amount := scratch+10
 
     ; Subtract 32 (1 row) from map width
     cld
@@ -17,6 +20,7 @@
     sbc #$20
     sta jump_amount
 
+    lsr buffer_columns ; back to 1x
     ; Render time
     Start:
         ; Tell the ppu were gonna start from top left ($2000)
@@ -57,6 +61,36 @@
             inx
             cpx #$24
             bne Render
+    
+    
+    ldx #$24 ; Page
+    ldy #$00 ; Position in page
+
+    StartBufferColumn:
+        Page:
+            bit PPU_STATUS
+            stx PPU_ADDR
+            sty PPU_ADDR
+            lda #$02
+            sta PPU_DATA
+            inc col_pos
+            tya
+            clc
+            adc #$20
+            tay
+            lda col_pos
+            cmp #$08
+            bne Page
+
+        ; We need to go to next page
+        inx
+        cpx #$28
+        bne Page
+
+
+
+
+    
     
     ; Return
     RTS

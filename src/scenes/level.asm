@@ -8,37 +8,35 @@
     sta PPU_MASK
 
     ; Render first name table
-    jsr reset_scratch ; reset temp vars
+    ; jsr reset_scratch ; reset temp vars
+    ; lda #<Level1Bg
+    ; sta scratch
+    ; lda #>Level1Bg
+    ; sta scratch+1
+    ; lda #$00 ; map width low byte
+    ; sta scratch+2
+    ; lda #$02 ; map width high byte
+    ; sta scratch+3
+    ; jsr render_screen
 
-    ; Store the address in 0-1
+
+    ; Render scroll buffer column #1
+    jsr reset_scratch ; reset temp vars
     lda #<Level1Bg
     sta scratch
     lda #>Level1Bg
     sta scratch+1
-    
-    lda #$80 ; map width low byte
+    lda #$00 ; map width low byte
     sta scratch+2
-    lda #$00 ; map width high byte
+    lda #$02 ; map width high byte
     sta scratch+3
-
-    ; Render it
-    jsr render_screen
-
-    ; Render scroll buffer column
-    ; jsr reset_scratch
-    ; set16 Level1Bg, scratch
-    ; lda #<$21
-    ; sta scratch+2
-    ; lda #>$00
-    ; sta scratch+3
-    ; lda #$80
-    ; sta scratch+4
-    ; ; lda #$21
-    ; ; sta scratch+3
-    ; ; sta scratch+4
-
-
-
+    lda #$00 ; map column low byte
+    sta scratch+4
+    lda #$00 ; map column high byte
+    sta scratch+5
+    lda #$05 ; nametable column
+    sta scratch+6
+    jsr render_column
 
     ; Set loaded flag
     lda #$01

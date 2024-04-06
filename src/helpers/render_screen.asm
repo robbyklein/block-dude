@@ -37,7 +37,7 @@
             
           
             ; If we make it here  we're ready to start a new row
-            add16 scratch, jump_amount_low
+            add16s scratch, jump_amount_low
             
             lda #$00
             sta row_pos

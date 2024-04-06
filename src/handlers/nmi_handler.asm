@@ -12,7 +12,7 @@
 
     ; Write the contents of the VRAM transfer buffer to the PPU.
     BIT PPU_ADDR
-    ; JSR empty_buffer
+    JSR empty_buffer
 
     ; Set rendering flags.
     LDA ppu_mask_next

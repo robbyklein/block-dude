@@ -5,3 +5,4 @@
 .include "reset_scratch.asm"
 .include "scroll_screen_x.asm"
 .include "render_column.asm"
+.include "reset_buffer.asm"

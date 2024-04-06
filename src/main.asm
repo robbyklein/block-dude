@@ -21,6 +21,7 @@
     ppu_control_value: .res 1
     scene_loaded: .res 1
     active_scene: .res 1
+    map_position: .res 1
     scratch: .res 12
     vram_buffer: .res 128
 

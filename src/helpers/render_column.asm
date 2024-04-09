@@ -1,11 +1,5 @@
-; Scratch 0-1 Map address
-; Scratch 2-3 Map width
-; Scratch 4-5 Map column
-; Scratch 6 nametable column
 .proc render_column
     ; Create labels for all our variables
-    map_width_low := scratch+2
-    map_width_high := scratch+3
     map_column_low := scratch+4
     map_column_high := scratch+5
     nametable_column := scratch+6
@@ -15,7 +9,7 @@
     nametable_page := scratch+11
 
     ; Add initial map offset
-    add16s scratch, map_column_low
+    add16s map_address, map_column_low
 
     ; See if in second nametable
     lda nametable_column
@@ -54,11 +48,11 @@
             sta PPU_ADDR
 
             ; Set the tile
-            lda (scratch),y
+            lda (map_address),y
             sta PPU_DATA
 
             ; Go to next row in map
-            add16s scratch, map_width_low
+            add16s map_address, map_width
 
             ; Inc nametable row
             inc nametable_row

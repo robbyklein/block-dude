@@ -1,15 +1,31 @@
-; Scratch 0-1 map address
-; Scratch 2 map width high byte
-; Scratch 3 map width low byte
+
+; Block 1
+; LDA #$1e      ; Length of the data block (1 byte)
+; STA vram_buffer     ; Store length at the start of the buffer
+
+; LDX #$24            ; High byte of the VRAM address
+; STX vram_buffer+1   ; Store the high byte of the VRAM address
+
+; LDY #$05            ; Low byte of the VRAM address
+; STY vram_buffer+2   ; Store the low byte of the VRAM address
+
+; ldx #$CA
+; ldy #$00
+
+
 .proc render_screen
-    ; Map info
-    map_width_low := scratch+2
-    map_width_high := scratch+3
+    ; Copy address
+    map_address_low := scratch
+    map_address_high := scratch+1
+    lda map_address
+    sta map_address_low
+    lda map_address+1
+    sta map_address_high
 
     ; Calculate jump amount width - 32 (one screen width)
     jump_amount_low := scratch+10
     jump_amount_high := scratch+11
-    subtract16 map_width_low, #$20, jump_amount_low
+    subtract16 map_width, #$20, jump_amount_low
     
     ; Render the tiles
     ldx #$20 ; Page
@@ -24,7 +40,7 @@
 
         RenderTile:
             ; Render the tile
-            lda (scratch),y
+            lda (map_address_low),y
             sta PPU_DATA
 
             ; Move row pos up 1
@@ -37,7 +53,7 @@
             
           
             ; If we make it here  we're ready to start a new row
-            add16s scratch, jump_amount_low
+            add16s map_address_low, jump_amount_low
             
             lda #$00
             sta row_pos
@@ -47,7 +63,7 @@
                 bne RenderTile
 
                 ; Go to next page
-                inc scratch+1
+                inc map_address_high
                 inx
                 cpx #$24
                 bne Render

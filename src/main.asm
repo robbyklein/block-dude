@@ -15,15 +15,22 @@
     frame_ready: .res 1
     scroll_x: .res 1
     scroll_y: .res 1
+    scroll_next: .res 1
     ppu_mask_next: .res 1
     ppu_mask_value: .res 1
     ppu_control_next: .res 1
     ppu_control_value: .res 1
     scene_loaded: .res 1
     active_scene: .res 1
-    map_position: .res 1
+    movement: .res 1
     scratch: .res 12
     vram_buffer: .res 128
+    map_width: .res 2
+    map_address: .res 2
+    map_position: .res 2
+    map_position_scratch: .res 2
+    nametable_column: .res 2
+
 
 .segment "BSS"
 

@@ -12,5 +12,10 @@
     sta scratch+9
     sta scratch+10
     sta scratch+11
+    sta scratch+12
+    sta scratch+13
+    sta scratch+14
+    sta scratch+15
+
     rts
 .endproc

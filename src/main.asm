@@ -9,6 +9,8 @@
 .segment "ZEROPAGE"
     debug: .res 1
     debug2: .res 1
+    scratch: .res 16
+    nmi_scratch: .res 4
     input: .res 1
     input_mode: .res 1
     nmi_counter: .res 1
@@ -23,14 +25,12 @@
     scene_loaded: .res 1
     active_scene: .res 1
     movement: .res 1
-    scratch: .res 12
     vram_buffer: .res 128
     map_width: .res 2
     map_address: .res 2
     map_position: .res 2
     map_position_scratch: .res 2
     nametable_column: .res 2
-
 
 .segment "BSS"
 

@@ -7,13 +7,20 @@
     lda #%00000110 
     sta PPU_MASK
 
-    ; Render intro name
+    ; Set map and map width
     lda #<IntroBg
-    sta scratch
+    sta map_address
     lda #>IntroBg
-    sta scratch+1
-    jsr render_screen
+    sta map_address+1
+    lda #$20 ; map width low byte
+    sta map_width
+    lda #$00 ; map width high byte
+    sta map_width+1
 
+    ; Render intro name
+    jsr reset_scratch
+    jsr render_screen
+ 
     ; Set loaded flag
     lda #$01
     sta scene_loaded

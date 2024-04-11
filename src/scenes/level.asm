@@ -21,7 +21,14 @@
     jsr reset_scratch ; reset temp vars
     jsr render_screen
 
+    ; Set next column
+    lda #$00
+    sta nametable_column
+    lda #$24
+    sta nametable_column+1
+
     ; Render 2 buffer columns
+    jsr reset_scratch 
     jsr render_next_column
     jsr empty_buffer
 
@@ -66,7 +73,11 @@
     cmp #$08
     bne Done
 
+    ; Load next two columns into vbuffer
+    jsr reset_scratch 
     jsr render_next_column
+
+    ; Reset movement 
     lda #$00
     sta movement
 

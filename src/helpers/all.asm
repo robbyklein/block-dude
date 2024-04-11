@@ -8,3 +8,4 @@
 .include "render_next_column.asm"
 .include "load_column.asm"
 .include "increment_column.asm"
+.include "get_next_map_column.asm"

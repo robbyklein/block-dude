@@ -1,28 +1,15 @@
-; Block 1
-; LDX #$24            ; High byte of the VRAM address
-; STX vram_buffer+1   ; Store the high byte of the VRAM address
-
-; LDY #$05            ; Low byte of the VRAM address
-; STY vram_buffer+2   ; Store the low byte of the VRAM address
-
-; ldx #$CA
-; ldy #$00
-
-    ; ; Load length of data
-    ; lda #$1e
-    ; sta vram_buffer
-
-
 .proc load_column
     ; Variables
     map_column_low := scratch
     map_column_high := scratch+1
     nametable_low := scratch+2
     nametable_high := scratch+3
-    map_address_low := scratch+4
-    map_address_high := scratch+5
-    jump_amount_low := scratch+6
-    jump_amount_high := scratch+7
+    starting_offset := scratch+4
+    
+    map_address_low := scratch+9
+    map_address_high := scratch+10
+    jump_amount_low := scratch+11
+    jump_amount_high := scratch+12
 
     ; Copy address
     lda map_address
@@ -35,22 +22,31 @@
 
     ; Load the buffer
     Load:
+        ; Grab starting offset
+        ldy starting_offset
+
         ; Set the length of the data
         lda #$1e
-        sta vram_buffer
+        sta vram_buffer, y
 
         ; Set the highbyte
         lda nametable_high
-        sta vram_buffer+1
+        sta vram_buffer+1, y
 
         ; Set the lowbyte
         lda nametable_low
-        sta vram_buffer+2
+        sta vram_buffer+2, y
 
         ; Load the data
-        ldx #$03 ; vram buffer offset
-        tile_index := scratch+8
-        tile_count := scratch+9
+
+        ; Get starting offset
+        lda #$03
+        clc
+        adc starting_offset
+        tax 
+
+        tile_index := scratch+14
+        tile_count := scratch+15
 
         LoadTiles:
             ldy #$00 ; map offset
